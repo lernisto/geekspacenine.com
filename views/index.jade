@@ -4,8 +4,61 @@ block content
   h1 Welcome Geek Space 9
   p This is a new site. I just built it with Roots and deployed it to Netlify.
 
-  h2 Here is how I did it.
   :marked
+    About a week ago, I was trying to figure out the best way to deploy
+    this blog. I looked at [Roots](https://roots.cx/), where I found a link
+    to [Netlify](https://www.netlify.com/). I signed up, and put it on my
+    backlog (with a relatively low priority). That priority increased when I got
+    an email from Netlify offering *money* for a blog post and a video tutorial.
+    I thought: "I can do a blog post and a video tutorial, and I like money."
+
+    <aside><p>Note that everything I say below is colored by my basic purpose:
+    publish a JAMstack blog over HTTPS on a domain that I control.
+
+    Specifically, I am not building an e-commerce site or a social networking site, and I refuse to touch anything even vaguely associated with PHP. I love Python, but I don't need Django or even Flask.</p>
+    </aside>
+
+    The first offer was a $100 Amazon gift card for 600 words answering the following questions:
+
+     * Where would you begin? Explain to a new user how to get started with Netlify.
+
+       see below.
+
+     * What did you do before Netlify?
+
+       * ad hoc setup on my own box at home (a lot of work to keep up. [Caddy](https://caddyserver.com/) is great.)
+       * GitHub pages (good, but no HTTPS)
+       * AWS (again a lot of work to maintain your EC2 instance. S3 only does HTTPS with Cloudfront.)
+       * Digital Ocean (Again; Its your box, you get to keep the pieces if it break.)
+
+     * Why did you choose Netlify?
+
+        When I started this site, I was skeptical. See my reasons at the end.
+
+     * How has your development process improved?
+
+        The continuous deployment is a killer feature. I am rethinking my whole workflow
+        because I like it so much I want to enjoy it everywhere. Root is good because
+        the feedback from editing is very fast. Before this, I was refreshing the
+        browser manually.
+
+     * What's the most useful feature Netlify offers in your opinion?
+
+        see below.
+
+     * Have you heard of JAMstack? What is your definition and how do you implement a JAMStack?
+
+        I haven't heard of JAMstack, but I have been working toward it for a few years. Until today,
+        I had just used the term "static website."  Maybe that doesn't sound as cool, and maybe it
+        doesn't capture the active nature of these sites, but it is easier for an outsider to understand.
+
+        Why do static sites matter? I could (and probably will) write a whole essay
+        about this topic. The most important reason (for me): peer to peer web service
+        is what will save the web from imploding on itself.
+
+
+    ## Here is how I did it (Getting Started).
+
     Make sure you have nodejs installed. I just used the default that came with `apt-get install nodejs nodejs-legacy`. (I am running Ubuntu 16.04 LTS.)
     The legacy part just adds a symlink so you can run it as `node` as well as `nodejs`
 
@@ -84,7 +137,9 @@ block content
     (which was the major reason I was looking at Netlify over AWS: You a have to
     use Cloudfront to get HTTPS from an S3 bucket, and Cloudfront is
     *expensive*) and got a
-    manually deployed site going fine. This is what my app config looked like:
+    manually deployed site going fine. I would show you pictures, but it *really*
+    is not very hard. If you can read instructions, you will be ok.
+    In the end, this is what my app config looked like:
 
     ![site config](/img/Screenshot_2016-08-12_23-07-13.png)
 
@@ -115,7 +170,7 @@ block content
 
     So, in summary, here are the killer features (for me—your mileage may vary):
 
-      * `git push` to deploy. And it's fast.
+      * `git push` to deploy. And it's fast. (< 15 seconds for this page.)
 
       * Easy HTTPS.
 
