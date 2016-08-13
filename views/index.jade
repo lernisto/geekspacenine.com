@@ -3,3 +3,75 @@ extends layout
 block content
   h1 Welcome Geek Space 9
   p This is a new site.
+  :marked
+    Make sure you have nodejs installed. I just used the default that came with `apt-get install nodejs nodejs-legacy`. (I am running Ubuntu 16.04 LTS.)
+    The legacy part just adds a symlink so you can run it as `node` as well as `nodejs`
+
+    	node --version
+
+    Then install [roots](https://roots.cx/)
+
+    	npm install roots -g
+    	roots --version
+
+    To make this work, I had to add a line to my ~/.nmprc:
+
+    	prefix=/path/to/writable/directory
+
+    I also added
+
+    	PATH=/path/to/writable/directory/bin
+    	NPM_MODULES=/path/to/writable/directory
+
+    to my `~/.bashrc`
+
+
+    The roots tutorial mentions ship, and `roots deploy -to netlify`, but
+    I had trouble with ship, and the README said it was unmaintained, so I dropped it.
+    As it happens, Netlify makes deployment so easy that ship isn't necessary.
+
+    Now I am going to actually build a site.
+
+    	roots new site
+    	cd site
+    	roots watch &
+    	atom .
+
+    Atom is slower than Sublime Text, and not as mature, but it works.
+
+    	git init .
+    	git ci -m'pristine roots site'
+    	git remote add origin git@github.com:lernisto/geekspacenine.com.git
+    	git push -u origin master
+
+    Right now, you could
+
+    	roots compile -e production
+    	netlify deploy
+
+    But that would be too much work. ;-) I wanted to go for what Netlify calls [continuous deployment](https://www.netlify.com/blog/2015/09/17/continuous-deployment). This requires
+    installing roots and friends into the `package.json` so Netlify's build server can do its magic.
+
+    	npm install roots --save
+    	npm install axis --save
+    	npm install rupture --save
+    	npm install autoprefixer-stylus --save
+    	npm install js-pipeline --save
+    	npm install css-pipeline --save
+    	npm install coffee-script --save
+    	npm install jade --save
+    	npm install marked --save
+    	npm install stylus --save
+    	roots compile
+
+    I did a `roots compile` between each of those npm installs, until it worked.
+    Now, the moment of truth:
+
+    	git ci -am'added missing build dependencies'
+    	git push
+
+    Now, if you have the Netlify side set up properly, it will *just work*™.
+
+    Oops. I guess it doesn't hurt to do a `roots compile -e production` before you push.
+    I had to `npm install --save transformer-marked` and change the `:markdown` tag to `:marked`.
+    
