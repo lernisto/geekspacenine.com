@@ -2,7 +2,9 @@ extends layout
 
 block content
   h1 Welcome Geek Space 9
-  p This is a new site.
+  p This is a new site. I just built it with Roots and deployed it to Netlify.
+
+  h2 Here is how I did it.
   :marked
     Make sure you have nodejs installed. I just used the default that came with `apt-get install nodejs nodejs-legacy`. (I am running Ubuntu 16.04 LTS.)
     The legacy part just adds a symlink so you can run it as `node` as well as `nodejs`
@@ -47,6 +49,7 @@ block content
     Right now, you could
 
     	roots compile -e production
+    	cd public
     	netlify deploy
 
     But that would be too much work. ;-) I wanted to go for what Netlify calls [continuous deployment](https://www.netlify.com/blog/2015/09/17/continuous-deployment). This requires
@@ -74,4 +77,57 @@ block content
 
     Oops. I guess it doesn't hurt to do a `roots compile -e production` before you push.
     I had to `npm install --save transformer-marked` and change the `:markdown` tag to `:marked`.
-    
+
+    ## Setup on the Netlify side.
+
+    I set this up, changed my DNS to point to Netlify's server, turned on HTTPS
+    (which was the major reason I was looking at Netlify over AWS: You a have to
+    use Cloudfront to get HTTPS from an S3 bucket, and Cloudfront is
+    *expensive*) and got a
+    manually deployed site going fine. This is what my app config looked like:
+
+    ![site config](/img/Screenshot_2016-08-12_23-07-13.png)
+
+    Then I hooked it up to a GitHub repo and pushed. Everything worked. Except for
+    one thing: the site disappeared in the dashboard.  The command line still sees it:
+
+        $ netlify sites
+        Your Sites geekspacenine: https://geekspacenine.com
+        Opening https://app.netlify.com/sites/geekspacenine
+        Site ID: 299f840c-d38f-480b-af08-4c362ccdb358
+
+    But when I go to https://app.netlify.com/ I am getting a blank, even though
+    the site deploys just fine.
+
+    ![what is wrong with this picture?](/img/Screenshot_2016-08-12_23-44-07.png)
+
+    And the main dashboard is also blank.
+
+    ![Wait. I know there is a site here.](/img/Screenshot_2016-08-12_23-39-56.png)
+
+
+    ## I am not complaining.
+
+    In spite of this glitch, the Netlify folks have done an awesome job. This is
+    *way* better than using ftp to upload files or even telnet =-( to edit the
+    files in place on the server, like we did in 1994. Having used Netlify for
+    three hours, I *never* want to go back to rysnc over ssh.
+
+    So, in summary, here are the killer features (for me—your mileage may vary):
+
+      * `git push` to deploy. And it's fast.
+
+      * Easy HTTPS.
+
+      * CDN. This is something I probably don't appreciate yet, because my sites
+        don't get enough traffic for this to matter, but I can appreciate how
+        difficult it would be if I had to set it up myself. (Hint: I wouldn't
+        unless someone paid me a boatload of money.)
+      * Did I mention that it is free? Yes, that is a dangerous word, because
+        it isn't really free. It does cost money to buy those servers, set them up,
+        and keep them running and connected to fat network pipes. So if you can
+        afford it, please do pay for it. There are "cheaper" solutions, but none
+        of them come close to offering what Netlify does.
+
+        On the other hand, if you are a penniless high-school student wanting
+        to learn how the web works, by all means jump in. The water is fine.
